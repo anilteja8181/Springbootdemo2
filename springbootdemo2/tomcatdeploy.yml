@@ -1,0 +1,46 @@
+  ---
+  - 
+  become: true
+  hosts: all
+  name: "installing tomcat"
+  vars:
+     tomcat_port: 8080
+  tasks:
+  -
+      name: Updating repos
+      yum:
+        name: "*"
+        state: latest
+  name: "installing tomcat"
+  vars:
+     tomcat_port: 8080
+  tasks:
+  -
+      name: Updating repos
+      yum:
+        name: "*"
+        state: latest
+  -
+      name: "install java"
+      yum:
+        name: openjdk-13-jdk
+        state: latest
+  -
+      name: "Downloading tomcat"
+      get_url:
+        url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.tar.gz
+        dest: /usr/local
+  -
+      name: Extracting downloaded tomcat
+      unarchive:
+        src: "/usr/local/apache-tomcat-9.0.41.tar.gz"
+        dest: /usr/local
+        remote_src: yes
+  -
+      name: Starting tomcat
+      shell: nohup /usr/local/latest/bin/startup.sh &
+  -
+      name: Copying the war file
+      copy:
+        src: /var/lib/jenkins/workspace/studentinfopipeline/studentinfo/target/studentinfo-0.0.1-SNAPSHOT.war
+        dest: /usr/local/apache-tomcat-9.0.41/webapps
