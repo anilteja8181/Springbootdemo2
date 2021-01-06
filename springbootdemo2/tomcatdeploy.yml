@@ -1,4 +1,4 @@
-  ---
+---
   - 
   become: true
   hosts: all
