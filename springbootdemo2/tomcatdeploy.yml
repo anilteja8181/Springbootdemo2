@@ -1,5 +1,5 @@
 ---
-  - 
+ - 
   become: true
   hosts: all
   name: "installing tomcat"
